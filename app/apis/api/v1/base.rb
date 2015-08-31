@@ -34,7 +34,7 @@ module API
         end
       end
 
-
+      mount V1::Books
     end
   end
 end
