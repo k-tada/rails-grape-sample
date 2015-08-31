@@ -1,3 +1,3 @@
 json.books @books do |book|
-  json.extract! book, :id, :title, :author, :updated_at
+  json.partial! 'api/v1/books/book', book: book
 end

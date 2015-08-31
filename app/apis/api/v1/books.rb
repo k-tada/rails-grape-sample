@@ -19,6 +19,14 @@ module API
           book = Book.new(book_params)
           book.save
         end
+
+        desc 'GET /api/v1/books/:id'
+        params do
+          requires :id, type: Integer, desc: "Book id."
+        end
+        get '/:id', jbuilder: 'api/v1/books/show' do
+          @book = Book.find(params[:id])
+        end
       end
     end
   end
