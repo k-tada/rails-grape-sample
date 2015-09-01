@@ -5,6 +5,13 @@ module API
     class Books < Grape::API
       resource :books do
         helpers do
+          def book_params
+            ActionController::Parameters.new(params).permit(:title, :author)
+          end
+
+          def set_book
+            @book = Book.find(params[:id])
+          end
 
           # Parameter check
           # :id
@@ -32,7 +39,6 @@ module API
           use :attributes
         end
         post '/' do
-          book_params = ActionController::Parameters.new(params).permit(:title, :author)
           book = Book.new(book_params)
           book.save
         end
@@ -42,7 +48,7 @@ module API
           use :id
         end
         get '/:id', jbuilder: 'api/v1/books/show' do
-          @book = Book.find(params[:id])
+          set_book
         end
 
         desc 'PUT /api/v1/books/:id'
@@ -51,8 +57,7 @@ module API
           use :attributes
         end
         put '/:id' do
-          book_params = ActionController::Parameters.new(params).permit(:title, :author)
-          @book = Book.find(params[:id])
+          set_book
           @book.update(book_params)
         end
       end
