@@ -27,6 +27,18 @@ module API
         get '/:id', jbuilder: 'api/v1/books/show' do
           @book = Book.find(params[:id])
         end
+
+        desc 'PUT /api/v1/books/:id'
+        params do
+          requires :id, type: Integer, desc: "Book id."
+          requires :title, type: String, desc: "Book title."
+          requires :author, type: String, desc: "Book author."
+        end
+        put '/:id' do
+          book_params = ActionController::Parameters.new(params).permit(:title, :author)
+          @book = Book.find(params[:id])
+          @book.update(book_params)
+        end
       end
     end
   end
