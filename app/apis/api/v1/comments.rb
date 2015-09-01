@@ -8,6 +8,10 @@ module API
           @book = Book.find(params[:book_id])
         end
 
+        def set_comment
+          @comment = Comment.find(params[:id])
+        end
+
         def comment_params
           ActionController::Parameters.new(params).permit(:body)
         end
@@ -16,6 +20,12 @@ module API
         # :book_id
         params :book_id do
           requires :book_id, type: Integer, desc: "Book id."
+        end
+
+        # Parameter check
+        # :id
+        params :id do
+          requires :id, type: Integer, desc: "Comment id."
         end
 
         # Parameter check
@@ -46,6 +56,16 @@ module API
             post '/' do
               set_book
               @book.comments.create(comment_params)
+            end
+
+            desc 'PUT /api/v1/books/:book_id/comments/:id'
+            params do
+              use :id
+              use :attributes
+            end
+            put '/:id' do
+              set_comment
+              @comment.update(comment_params)
             end
           end
         end
