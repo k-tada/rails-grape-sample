@@ -1,3 +1,3 @@
 json.comments @comments do |comment|
-  json.extract! comment, :id, :body, :updated_at
+  json.partial! 'api/v1/comments/comment', comment: comment
 end
