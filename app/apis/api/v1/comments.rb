@@ -67,6 +67,15 @@ module API
               set_comment
               @comment.update(comment_params)
             end
+
+            desc 'DELETE /api/v1/books/:book_id/comments/:id'
+            params do
+              use :id
+            end
+            delete '/:id' do
+              set_comment
+              @comment.destroy
+            end
           end
         end
       end
