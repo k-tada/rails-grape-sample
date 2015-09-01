@@ -35,6 +35,7 @@ module API
       end
 
       mount V1::Books
+      mount V1::Comments
     end
   end
 end
