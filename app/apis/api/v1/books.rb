@@ -60,6 +60,15 @@ module API
           set_book
           @book.update(book_params)
         end
+
+        desc 'DELETE /api/v1/books/:id'
+        params do
+          use :id
+        end
+        delete '/:id' do
+          set_book
+          @book.destroy
+        end
       end
     end
   end
